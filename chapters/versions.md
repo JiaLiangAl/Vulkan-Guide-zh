@@ -1,14 +1,13 @@
-# Versions
+# 版本
 
-Vulkan works on a [major, minor, patch](https://www.khronos.org/registry/vulkan/specs/1.1/html/vkspec.html#extendingvulkan-coreversions-versionnumbers) versioning system. Currently, there are 2 minor version releases of Vulkan (1.0 and 1.1) which are backward compatible with each other. An application can use [vkEnumerateInstanceVersion](https://www.khronos.org/registry/vulkan/specs/1.1/html/vkspec.html#vkEnumerateInstanceVersion) to check what version of a Vulkan instance is supported. There is also a [white paper](https://www.lunarg.com/wp-content/uploads/2019/02/Vulkan-1.1-Compatibility-Statement_01_19.pdf) by LunarG on how to query and check for the supported version. While working across minor versions, there are some subtle things to be aware of.
+Vulkan 工作在 [major, minor, patch](https://www.khronos.org/registry/vulkan/specs/1.1/html/vkspec.html#extendingvulkan-coreversions-versionnumbers) 版本系统上。目前，目前有2个次要版本已经发布(1.0和1.1)，它们彼此向后兼容。应用程序可以用[vkEnumerateInstanceVersion](https://www.khronos.org/registry/vulkan/specs/1.1/html/vkspec.html#vkEnumerateInstanceVersion) Vulkan实例支持哪个版本。还有一份[白皮书](https://www.lunarg.com/wp-content/uploads/2019/02/Vulkan-1.1-Compatibility-Statement_01_19.pdf) ，LunarG所作，关于怎样查询和检测支持的版本。在处理次要版本时，需要注意一些细微的事情。
 
-## Instance and Device
+## 实例和设备
+重要的是要记住实例级版本和设备级版本之间是有区别的。加载器和实现可能支持不同的版本。
 
-It is important to remember there is a difference between the instance-level version and device-level version. It is possible that the loader and implementations will support different versions.
+Vulkan规范中的[查询版本支持](https://www.khronos.org/registry/vulkan/specs/1.1/html/vkspec.html#extendingvulkan-coreversions-queryingversionsupport)一节详细介绍了如何在实例级和设备级查询受支持的版本。 
 
-The [Querying Version Support](https://www.khronos.org/registry/vulkan/specs/1.1/html/vkspec.html#extendingvulkan-coreversions-queryingversionsupport) section in the Vulkan Spec goes into details on how to query for supported versions at both the instance and device level.
-
-## Header
+## 头(Header)
 
 There is only one supported header for all major releases of Vulkan. This means that there is no such thing as "Vulkan 1.0 headers" as all headers for a minor and patch version are unified. This should not be confused with the ability to generate a 1.0 version of the [Vulkan Spec](./vulkan_spec.md), as the Vulkan Spec and header of the same patch version will match. An example would be that the generated 1.0.42 Vulkan Spec will match the 1.x.42 header.
 

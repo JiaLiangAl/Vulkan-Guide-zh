@@ -1,16 +1,16 @@
-# What is Vulkan?
+# Vulkan 是什么?
 
-> Vulkan is a new generation graphics and compute API that provides high-efficiency, cross-platform access to modern GPUs used in a wide variety of devices from PCs and consoles to mobile phones and embedded platforms.
+> Vulkan是新一代的图形和计算API，它提供了对现代gpu的高效、跨平台访问，这些gpu广泛应用于各种设备，从pc和控制台到移动电话和嵌入式平台。 
 
-Vulkan is not a company, nor language, but rather a way for developers to program their modern GPU hardware in a cross-platform and cross-vendor fashion. The Khronos Group is a member-driven consortium that created and maintains Vulkan.
+Vulkan不是一家公司，也不是一种语言，而是一种让开发者以跨平台和跨供应商的方式来为他们的现代GPU硬件编程的方式。Khronos集团是一个成员驱动的联盟，创建并维护Vulkan。
 
-## Vulkan at its core
+## Vulkan 的核心
+在核心，Vulkan是一个[API 规范](https://www.khronos.org/registry/vulkan/#apispecs)，这是一个支持实现的硬件后续。公共规范是由[./xml/vk.xml](https://github.com/KhronosGroup/Vulkan-Docs/blob/master/xml/vk.xml) Vulkan规范仓库在[Vulkan- doc](https://github.com/KhronosGroup/Vulkan-Docs)中发现的官方公共副本中的Vulkan注册文件生成的。[XML方案文件](https://www.khronos.org/registry/vulkan/specs/1.1/registry.html)也是如此。
 
-At the core, Vulkan is an [API Specification](https://www.khronos.org/registry/vulkan/#apispecs) that conformant hardware implementations follow. The public specification is generated from the [./xml/vk.xml](https://github.com/KhronosGroup/Vulkan-Docs/blob/master/xml/vk.xml) Vulkan Registry file in the official public copy of the Vulkan Specification repo found at [Vulkan-Doc](https://github.com/KhronosGroup/Vulkan-Docs). Documentation of the [XML schema](https://www.khronos.org/registry/vulkan/specs/1.1/registry.html) is also available.
+Khronos 组织，连同Vulkan规范一起发布了从[API注册表](https://www.khronos.org/registry/vulkan/#apiregistry)生成的[C99](http://www.open-std.org/jtc1/sc22/wg14/www/standards) [头文件](https://github.com/KhronosGroup/Vulkan-Headers/tree/master/include/vulkan)，开发人员可以使用这些头文件与Vulkan API进行对接。
 
-The Khronos Group, along with the Vulkan Specification, releases [C99](http://www.open-std.org/jtc1/sc22/wg14/www/standards) [header files](https://github.com/KhronosGroup/Vulkan-Headers/tree/master/include/vulkan) generated from the [API Registry](https://www.khronos.org/registry/vulkan/#apiregistry) that developers can use to interface with the Vulkan API.
+对于那些可能不使用C代码的人，有各种各样的[language](https://github.com/KhronosGroup/Khronosdotorg/blob/master/api/vulkan/resources.md#language-bindings) [bindings](https://github.com/vinjn/awesome-vulkan#bindings)。
 
-For those who might not work with C code, there are various [language](https://github.com/KhronosGroup/Khronosdotorg/blob/master/api/vulkan/resources.md#language-bindings) [bindings](https://github.com/vinjn/awesome-vulkan#bindings) out there.
 
 ## Vulkan and OpenGL
 
