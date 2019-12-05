@@ -1,9 +1,9 @@
-# Pipeline Cache
-
-Pipeline caching is a technique used with [VkPipelineCache](https://www.khronos.org/registry/vulkan/specs/1.1/html/vkspec.html#VkPipelineCache) objects to reuse pipelines that have already been created. Pipeline creation can be somewhat costly - it has to compile the shaders at creation time for example. The big advantage of a pipeline cache is that the pipeline state can be saved to a file to be used between runs of an application, eliminating some of the costly parts of creation. There is a great Khronos presentation on pipeline caching from [SIGGRAPH 2016](https://www.khronos.org/assets/uploads/developers/library/2016-siggraph/3D-BOF-SIGGRAPH_Jul16.pdf) ([video](https://www.youtube.com/watch?v=owuJRPKIUAg&t=1045s)) starting on slide 140.
+# 管道缓存
+管道缓存是一种通过[VkPipelineCache](https://www.khronos.org/registry/vulkan/specs/1.1/html/vkspec.html#VkPipelineCache)对象重用已经创建的管道的技术。管道的创建会有某些开销 —— 比如在被创建时，它必须编译着色色器。管道缓存大的优点在于管道的状态可以保存到文件，以便在应用程序运行之间使用，从而消除了创建过程中一些开销很大的部分。有一个关于管道缓存的精彩演讲来自[SIGGRAPH 2016](https://www.khronos.org/assets/uploads/developers/library/2016-siggraph/3D-BOF-SIGGRAPH_Jul16.pdf)([video](https://www.youtube.com/watch?v=owuJRPKIUAg&t=1045s))，从第140页开始。
 
 ![pipeline_cache_cache.png](../images/pipeline_cache_cache.png)
 
-While pipeline caches are an important tool, it is important to create a robust system for them which Arseny Kapoulkine talks about in his [blog post](https://zeux.io/2019/07/17/serializing-pipeline-cache/).
+虽然管道缓存是一个重要的工具，但重要的是为它们创建一个健壮的系统，Arseny Kapoulkine在他的[博客](https://zeux.io/2019/07/17/serializing-pipeline-cache/)中谈到了这一点。
 
-To illustrate the performance gain and see a reference implementation of pipeline caches Khronos offers a [sample](https://github.com/KhronosGroup/Vulkan-Samples/tree/master/samples/performance/pipeline_cache) and [tutorial](https://github.com/KhronosGroup/Vulkan-Samples/blob/master/samples/performance/pipeline_cache/pipeline_cache_tutorial.md).
+为了演示性能提升并查看管道缓存的参考实现，Khronos提供了一个[示例](https://github.com/KhronosGroup/Vulkan-Samples/tree/master/samples/performance/pipeline_cache)和[教程](https://github.com/KhronosGroup/Vulkan-Samples/blob/master/samples/performance/pipeline_cache/pipeline_cache_tutorial.md)。
+

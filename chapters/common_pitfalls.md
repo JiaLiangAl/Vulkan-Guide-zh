@@ -1,44 +1,40 @@
-# Common Pitfalls for new Vulkan Developers
+# 新Vulkan开发人员的常见陷阱
 
-This is a short list of assumptions, traps, and anti-patterns in the Vulkan API. It is not a list of "best practices", rather it covers the common mistakes that developers new to Vulkan could easily make.
+这是Vulkan API中的一个简短的假设、陷阱和反模式列表。它不是一个“最佳实践”的列表，而是包含了新到Vulkan的开发人员容易犯的常见错误。
 
-### Validation Layers
+### 验证层
+在开发期间，确保启用了验证层。它们是在使用Vulkan API时捕捉错误的宝贵工具。参数检查、对象生存期和线程违反都是提供的错误检查的一部分。确保启用它们的一种方法是验证文本“Debug Messenger Added”是否在输出流中。更多信息可以在[Vulkan SDK](https://vulkan.lunarg.com/doc/sdk/latest/windows/layer_configuration.html)层文档中找到。
 
-During development, ensure that the Validation Layers are enabled. They are an invaluable tool for catching mistakes while using the Vulkan API. Parameter checking, object lifetimes, and threading violations all are part of the provided error checks. A way to reassure that they are enabled is to verify if the text "Debug Messenger Added" is in the output stream. More info can be found in the [Vulkan SDK](https://vulkan.lunarg.com/doc/sdk/latest/windows/layer_configuration.html) layer documentation.
 
-### Vulkan is a box of tools
+### Vulkan 是一个工具箱
 
-In Vulkan, most problems can be tackled with multiple methods, each with their own benefits and drawbacks. There is rarely a "perfect" solution and obsessing over finding one is often a fruitless effort. When faced with a problem, try to create an adequate solution that meets the current needs and isn't overly convoluted. While the specification for Vulkan can be useful, it isn't the best source for how to use Vulkan in practice. Instead, reference external sources, like this guide, hardware best practice guides, tutorials, and other articles for more in-depth information. Finally, profiling various solutions is an important part of discovering which solution to use.
+在Vulkan中，大多数问题都可以通过多种方法来解决，每种方法各有优缺点。很少有“完美”的解决方案，一味地寻找完美的解决方案往往是徒劳的。当遇到问题时，尝试创建一个适当的解决方案来满足当前的需求，而不是过于复杂。虽然Vulkan规范可能很有用，但它并不是在实践中使用Vulkan的最佳来源。相反，请参考外部资源，如本指南、硬件最佳实践指南、教程和其他文章，以获得更深入的信息。最后，分析各种解决方案是发现使用哪种解决方案的重要部分。
 
-### Recording command buffers  
+### 记录命令缓冲区  
+许多早期的Vulkan教程和文档都建议一次性编写一个命令缓冲区，并尽可能地重用它。然而在实践中，由于实现的复杂性，重用很少有宣传的性能优势，同时也会带来不小的开发负担。看似不合常理,因为重用数据是一种常见的优化计算,管理一个场景对象被添加和删除以及绘制调用不同的技术,如截头扑杀发布在每帧的基础上使重用命令缓冲区严重的设计挑战。它需要一个缓存方案来管理命令缓冲区和维护状态，以确定是否需要以及何时需要重新记录。相反，最好在每一帧重新记录新的命令缓冲区。如果性能有问题，记录可以是多线程的，也可以为非变量的draw调用(如后处理)使用辅助命令缓冲区。
 
-Many early Vulkan tutorials and documents recommended writing a command buffer once and re-using it wherever possible. In practice however re-use rarely has the advertized performance benefit while incurring a non-trivial development burden due to the complexity of implementation. While it may appear counterintuitive, as re-using computed data is a common optimization, managing a scene with objects being added and removed as well as techniques such as frustum culling which vary the draw calls issued on a per frame basis make reusing command buffers a serious design challenge. It requires a caching scheme to manage command buffers and maintaining state for determining if and when re-recording becomes necessary. Instead, prefer to re-record fresh command buffers every frame. If performance is a problem, recording can be multithreaded as well as using secondary command buffers for non-variable draw calls, like post processing.
+### 多管线
 
-### Multiple pipelines
+图形`VkPipeline`包含执行draw调用所需的状态组合。用不同的着色器渲染场景，混合模式，顶点布局等，将需要一个管道为每种可能性。因为在draw调用之间创建和交换管道会产生相关的成本，所以最好只在需要时创建和交换管道。然而，通过使用各种技术和特性来进一步减少在简单情况之外的创建和交换可能会适得其反，因为它增加了复杂性，但不能保证带来好处。对于大型引擎来说，这可能是必要的，但除此之外，它不太可能成为瓶颈。使用管道缓存可以进一步降低成本，而不必求助于更复杂的方案。
 
-A graphics `VkPipeline` contains the combination of state needed to perform a draw call. Rendering a scene with different shaders, blending modes, vertex layouts, etc, will require a pipeline for each possibility. Because pipeline creation and swapping them between draw calls have an associated cost, it is a good practice to create and swap pipelines only as needed. However, by using various techniques and features to further reduce creation and swapping beyond the simple cases can be counterproductive, as it adds complexity with no guarantee of benefit. For large engines this may be necessary, but otherwise it is unlikely to be a bottleneck. Using the pipeline cache can further reduce the costs without resorting to more complex schemes.
+### 每个swapchain映像的资源复制
+流水线帧是提高性能的常用方法。通过同时呈现多个帧，每个帧使用所需资源的自己的副本，它通过消除资源争用减少了延迟。这个简单的实现将复制swapchain中每个图像所需的资源。问题是，这导致假设呈现资源必须为每个swapchain映像重复一次。虽然对于某些资源(如用于每个帧的命令缓冲区和信号量)来说很实用，但是使用swapchain图像的一对一复制通常是不必要的。Vulkan提供了大量的灵活性，让开发人员选择适合他们的情况的复制级别。许多资源可能只需要两个副本，例如统一缓冲区或每帧更新一次的数据，而其他资源可能根本不需要任何副本。
 
-### Resource duplication per swapchain image
+### 每个队列族有多个队列
+多个硬件平台每个队列族有多个`VkQueue` 。这非常有用，因为可以从不同的队列将工作提交到相同的队列家族。虽然有一些优点，但是创建或使用额外的队列不一定更好。有关具体的性能建议，请参阅硬件供应商的最佳实践指南。
 
-Pipelining frames is a common way to improve performance. By having multiple frames rendering at the same time, each using their own copy of the required resources, it reduces latency by removing resource contention. A simple implementation of this will duplicate the resources needed by each image in the swapchain. The issue is that this leads to assuming rendering resources must be duplicated once for each swapchain image. While practical for some resources, like the command buffers and semaphores used for each frame, the one to one duplication with swapchain images isn't often necessary. Vulkan offers a large amount of flexibility, letting the developer choose what level of duplication is right for their situation. Many resources may only need two copies, for example uniform buffers or data which is updated once per frame, and others may not need any duplication at all.
 
-### Multiple queues per queue family
+### 描述符集
+描述符集的设计是为了方便根据使用和更新频率对着色器中使用的数据进行分组。Vulkan规范要求硬件支持同时使用至少4个描述符集，而大多数硬件支持至少8个描述符集。因此，在明智的情况下，几乎没有理由不使用一种以上的方法。
 
-Several hardware platforms have more than one `VkQueue` per queue family. This can be useful by being able to submit work to the same queue family from separate queues. While there can be advantages, it isn't necessarily better to create or use the extra queues. For specific performance recommendations, refer to hardware vendors' best practices guides.
+### 正确使用API
 
-### Descriptor Sets
-
-Descriptor Sets are designed to facilitate grouping data used in shaders by usage and update frequency. The Vulkan Spec mandates that hardware supports using at least 4 Descriptor Sets at a time, with most hardware supporting at least 8. Therefore there is very little reason not to use more than one where it is sensible.
-
-### Correct API usage practices
-
-While the Validation Layers can catch many types of errors, they are not perfect. Below is a short list of good habits and possible sources of error when encountering odd behavior.
-
-* Initialize all variables and structs.
-* Use the correct `sType` for each structure.
-* Verify correct `pNext` chain usage, nulling it out when not needed.
-* There are no default values in Vulkan.
-* Use correct enum, `VkFlag`, and bitmask values. 
-* Consider using a type-safe Vulkan wrapper, eg. [Vulkan.hpp](https://github.com/KhronosGroup/Vulkan-Hpp) for C++
-* Check function return values, eg `VkResult`.
-* Call cleanup functions where appropriate.
+虽然验证层可以捕获许多类型的错误，但它们并不完美。以下是一些好习惯，以及遇到奇怪行为时可能的错误来源。
+* 初始化所有变量和结构体。
+* 为每个结构使用正确的`sType`。
+* 验证正确的`pNext`链的用法，在不需要的时候将其清除。
+* 在Vulkan中不存在默认值。
+* 使用正确的枚举，`VkFlag`，和位掩码值。
+* 考虑用一种类型安全的封装，如C++的[Vulkan.hpp](https://github.com/KhronosGroup/Vulkan-Hpp)。
+* 检验函数的返回值，如`VkResult`。
+* 在适当的地方调用清理函数。

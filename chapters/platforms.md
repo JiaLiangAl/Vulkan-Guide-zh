@@ -38,5 +38,5 @@ Vulkan支持Windows 7, Windows 8 和 Windows 10。
 
 ## Others
 
-一些嵌入式系统通过允许显示[直接显示]来支持Vulkan (https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#display)。
+一些嵌入式系统通过允许显示[直接显示](https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#display)来支持Vulkan 。
 
