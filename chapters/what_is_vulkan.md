@@ -12,7 +12,7 @@ Khronos 组织，连同Vulkan规范一起发布了从[API注册表](https://www.
 对于那些可能不使用C代码的人，有各种各样的[language](https://github.com/KhronosGroup/Khronosdotorg/blob/master/api/vulkan/resources.md#language-bindings) [bindings](https://github.com/vinjn/awesome-vulkan#bindings)。
 
 
-## Vulkan and OpenGL
+## Vulkan 和 OpenGL
 
 Some developers might be aware of the other Khronos Group standard [OpenGL](https://www.khronos.org/opengl/) which is also a 3D Graphics API. Vulkan is not a direct replacement for OpenGL, but rather an explicit API that allows for more explicit control of the GPU.
 
