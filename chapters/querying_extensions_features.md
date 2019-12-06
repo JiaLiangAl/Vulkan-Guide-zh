@@ -1,48 +1,41 @@
-# Querying, Extensions, and Features
+# 查询，扩展和特性（Querying, Extensions, and Features）
+一个Vulkan的主要特性是可以用来在多平台和设备上开发。为此，应用程序负责从每个物理设备查询信息，然后根据这些信息做出决策。
 
-One of Vulkan's main features is that is can be used to develop on multiple platforms and devices. To make this possible, an application is responsible for querying the information from each physical device and then basing decisions on this information.
+可以从物理设备中查询到的项
+- 属性
+- 特性
+- 扩展
+- 限制
+- 格式
 
-The items that can be queried from a physical device
-- Properties
-- Features
-- Extensions
-- Limits
-- Formats
+## 属性（Properties）
+在Vulkan中有许多其他组件被标记为属性。术语“属性”是一个涵盖所有可查询的只读数据的术语。
 
-## Properties
+## 扩展（Extensions）
+扩展可能定义新的Vulkan函数，有些暴露可选的新特性，有些甚至中是暴露对SPIR-V操作的支持。既有实例扩展，也有设备扩展，所以注意确保去检查它是哪一种（可以在扩展定义的地方的“Extension Type”下找到）。
 
-There are many other components in Vulkan that are labeled as properties. The term "properties" is an umbrella term for any read-only data that can be queried.
+应用程序可以首先[查询物理设备](https://www.khronos.org/registry/vulkan/specs/1.1/html/vkspec.html#extendingvulkan-extensions)来检查是否支持该扩展。应用程序需要通过传递一个列表到`VkInstance`或者`VkDevice`来启用计划用到的扩展。一旦扩展被启用，所有新的原语(枚举、结构、函数等)现在都可以使用了。如果扩展没有被启用，使用任何该扩展的原语都是未定义行为。
 
-## Extensions
+## 特性（Features）
+特性描述了并非所有实现都支持的功能。特性可以被[查询](https://www.khronos.org/registry/vulkan/specs/1.1/html/vkspec.html#vkGetPhysicalDeviceFeatures)，然后在创建`VkDevice`时启用。除了[列出所有特性](https://www.khronos.org/registry/vulkan/specs/1.1/html/vkspec.html#features)以外，由于更新的Vulkan版本或使用了扩展，一些特性是强制性的。
 
-Extensions may define new Vulkan function to use, some expose optional new features, and some even just expose support for SPIR-V operations. There are both instance extensions and device extensions so make sure to check which type it is (this can be found under "Extension Type" where the extension is defined).
+一种常见的技术是，一个扩展公开一个新的结构，这个结构可以通过`pNext`来传递，它增加了更多要查询的特性。
 
-An application can [query the physical device](https://www.khronos.org/registry/vulkan/specs/1.1/html/vkspec.html#extendingvulkan-extensions) first to check if the extension is supported. The application needs to enable the extensions it plans on using by passing a list to either `VkInstance` or `VkDevice`. Once the extension is enabled all the new primitives (enums, structs, functions, etc) now become valid and can be used. If the extension is not enabled, it is undefined behavior to use any of the extension primitives.
+## 限制（Limits）
+限制是与实现相关的最小值、最大值和应用程序可能需要知道的其他设备特征。除了[限制列表](https://www.khronos.org/registry/vulkan/specs/1.1/html/vkspec.html#limits)以外，有些限制还具有来自Vulkan实现的[要求的 最小/最大 值](https://www.khronos.org/registry/vulkan/specs/1.1/html/vkspec.html#limits-minmax)。
 
-## Features
+## 格式（Formats）
+每个`VkBuffer`和`VkImage`要求来自Vulkan[VkFormat](https://www.khronos.org/registry/vulkan/specs/1.1/html/vkspec.html#formats-definition)列表中的一种格式。支持的格式可能有不同的实现，除了 [保证最少的格式特性集](https://www.khronos.org/registry/vulkan/specs/1.1/html/vkspec.html#features-required-format-support)。应用程序可以查询支持的格式属性。
 
-Features describe functionality which is not supported on all implementations. Features can be [queried](https://www.khronos.org/registry/vulkan/specs/1.1/html/vkspec.html#vkGetPhysicalDeviceFeatures) and then enabled when creating the `VkDevice`. Besides the [list of all features](https://www.khronos.org/registry/vulkan/specs/1.1/html/vkspec.html#features), some [features are mandatory](https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#features-requirements) due to newer Vulkan versions or use of extensions.
+每种格式都有一组`VkFormatFeatureFlagBits`，用于说明是否支持该格式。这些特征位将进一步分组以确定格式的使用方式。
 
-A common technique is for an extension to expose a new struct that can be passed through `pNext` that adds more features to be queried.
-
-## Limits
-
-Limits are implementation-dependent minimums, maximums, and other device characteristics that an application may need to be aware of. Besides the [list of all limits](https://www.khronos.org/registry/vulkan/specs/1.1/html/vkspec.html#limits), some limits also have [minimum/maximum required values](https://www.khronos.org/registry/vulkan/specs/1.1/html/vkspec.html#limits-minmax) guaranteed from a Vulkan implementation.
-
-## Formats
-
-Every `VkBuffer` and `VkImage` requires a format from the supported Vulkan [VkFormat](https://www.khronos.org/registry/vulkan/specs/1.1/html/vkspec.html#formats-definition) list. The supported formats may vary across implementations, but a [minimum set of format features are guaranteed](https://www.khronos.org/registry/vulkan/specs/1.1/html/vkspec.html#features-required-format-support). An application can [query](https://www.khronos.org/registry/vulkan/specs/1.1/html/vkspec.html#formats-properties) for the supported format properties.
-
-Each format has a set of `VkFormatFeatureFlagBits` for how the format is supported or not. These features bits are grouped further for how the format is used.
-
-> Example: One can check if the `VK_FORMAT_R8_UNORM` format supports being sampled when an images is created with a `tiling` parameter of `VK_IMAGE_TILING_LINEAR`.
+> 例如：可以检查`VK_FORMAT_R8_UNORM`格式是否支持在使用`VK_IMAGE_TILING_LINEAR`的`tiling`参数创建图像时采样。
 >
-> To do this, query the `linearTilingFeatures` flags for `VK_FORMAT_R8_UNORM` to see if the `VK_FORMAT_FEATURE_SAMPLED_IMAGE_BIT` is set for the implementation.
+> 要做到这一点，查询`VK_FORMAT_R8_UNORM`的`linearTilingFeatures`标志，看是否为实现设置了`VK_FORMAT_FEATURE_SAMPLED_IMAGE_BIT`。
 
-## Tools
+## 工具（Tools）
+这里有少量工具来帮助以一种快速和可读的格式获取所有信息。
 
-There are a few tools to help with getting all the information in a quick and in a human readable format.
+`vulkaninfo`是一个Windows,Linux和macOS的命令行工具，让您可以查看关于您GPU的关于以上所有可用的项。参考Vulkan SDK 中的[Vulkaninfo 文档](https://vulkan.lunarg.com/doc/sdk/latest/windows/vulkaninfo.html)
 
-`vulkaninfo` is a command line utility for Windows, Linux, and the macOS that enables you to see all the available items listed above about your GPU. Refer to the [Vulkaninfo documentation](https://vulkan.lunarg.com/doc/sdk/latest/windows/vulkaninfo.html) in the Vulkan SDK.
-
-The [Vulkan Hardware Capability Viewer](https://play.google.com/store/apps/details?id=de.saschawillems.vulkancapsviewer&hl=en_US) app developed by Sascha Willems, is an Android app to display all details for devices that support Vulkan.
+Sascha Willems 开发的[Vulkan 硬件功能查看器](https://play.google.com/store/apps/details?id=de.saschawillems.vulkancapsviewer&hl=en_US) app ，是一个显示支持Vulkan设备的所有细节的 Android app 。

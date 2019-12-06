@@ -1,10 +1,9 @@
-# pNext and sType
+# pNext 和 sType
+刚接触Vulkan的人会开始注意到Vulkan规范中的`pNext`和`sType`变量。
 
-People new to Vulkan will start to notice the `pNext` and `sType` variables all around the Vulkan Spec.
+`void* pNext`用于通过在结构之间创建一个链表来扩展Vulkan规范。Vulkan规范中[pNext 有效的用法](https://www.khronos.org/registry/vulkan/specs/1.1/html/vkspec.html#fundamentals-validusage-pNext)这一节深入的解释了`pNext`的两种不同变体。`VkStructureType sType`用于加载器、层，和实现来知道`pNext`传递了什么类型的结构。`pNext`主要用于处理暴露新结构的扩展。
 
-The `void* pNext` is used to allow for expanding the Vulkan Spec by creating a Linked List between structures. The [pNext valid usage](https://www.khronos.org/registry/vulkan/specs/1.1/html/vkspec.html#fundamentals-validusage-pNext) section of the Vulkan Spec goes into details explaining the two different variations of `pNext` structures. The `VkStructureType sType` is used by the loader, layers, and implementations to know what type of struct was passed in by `pNext`. The use of `pNext` is mostly used when dealing with extensions that expose new structures.
-
-An example to help illustrate the use of `pNext`
+一个展示`pNext` 用法的例子：
 
 ```
 // An example with two structures, "a" and "b"
