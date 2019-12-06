@@ -1,9 +1,8 @@
 # Vulkan CTS
+Vulkan一致性测试套件(CTS)是一组用于验证实现一致性的测试。一个符合的实现表明它已经成功通过了CTS，是Vulkan的一个有效实现。一个[符合产品的清单](https://www.khronos.org/conformance/adopters/conformant-products/vulkan)公开可用。
 
-The Vulkan Conformance Tests Suite (CTS) is a set of tests used to verify the conformance of an implementation. A conformant implementation shows that it has successfully passed CTS and it is a valid implementation of Vulkan. A [list of conformant products](https://www.khronos.org/conformance/adopters/conformant-products/vulkan) is publicly available.
+任何具有符合实现的公司都可以自由地使用公开发布的Vulkan规范来创建产品。Vulkan API的所有实现都必须在[Khronos Vulkan 适配程序](https://www.khronos.org/adopters)中进行一致性测试，然后才能将Vulkan名称或徽标与API的实现结合使用。
 
-Any company with a conformant implementation may freely use the publicly released Vulkan specification to create a product. All implementations of the Vulkan API must be tested for conformance in the [Khronos Vulkan Adopter Program](https://www.khronos.org/adopters) before the Vulkan name or logo may be used in association with an implementation of the API.
-
-The [Vulkan CTS source code](https://github.com/KhronosGroup/VK-GL-CTS/tree/master/external/vulkancts) is freely available and anyone is free to create and add a new test to the Vulkan CTS as long as they follow the [Contributing Wiki](https://github.com/KhronosGroup/VK-GL-CTS/wiki/Contributing).
+[Vulkan CTS 源码](https://github.com/KhronosGroup/VK-GL-CTS/tree/master/external/vulkancts)是免费提供的，任何人都可以免费创建和添加一个新的测试到Vulkan CTS，只要他们遵循[贡献Wiki](https://github.com/KhronosGroup/VK-GL-CTS/wiki/Contributing)。
 
 ![vulkan_cts_overview.png](../images/vulkan_cts_overview.png)

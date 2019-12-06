@@ -9,7 +9,7 @@ Vulkan 要求一个[Vulkan 加载器](./loader.md)和一个Vulkan驱动程序(�
 首先要做的是检查你的[平台](./platforms.md)是否支持Vulkan。每个平台使用不同的机制来管理[Vulkan加载器](./loader.md)的实现方式。然后，加载程序负责确定Vulkan驱动程序是否正确地暴露出来。
 
 ### Android
-获取Vulkan信息的一种简单的方式是运行Sascha Willems开发的app[Vulkan Hardware Capability Viewer](https://play.google.com/store/apps/details?id=de.saschawillems.vulkancapsviewer&hl=en_US)。这个app不仅会显示是否支持Vulkan，而且还有设备提供的所有功能。
+获取Vulkan信息的一种简单的方式是运行Sascha Willems开发的app[Vulkan 硬件功能查看器](https://play.google.com/store/apps/details?id=de.saschawillems.vulkancapsviewer&hl=en_US)。这个app不仅会显示是否支持Vulkan，而且还有设备提供的所有功能。
 
 ### Linux
 
