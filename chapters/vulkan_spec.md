@@ -1,65 +1,58 @@
-# Vulkan Specification
+# Vulkan 规范（Vulkan Specification）
+Vulkan规范(通常称为 _Vulkan Spec_ )是关于Vulkan API如何工作的官方描述，并最终用于确定什么是和不是有效的Vulkan用法。乍一看，Vulkan规范似乎是一个非常巨大的文本块，但它通常是开发时最有用的选项。
 
-The Vulkan Specification (referred usually as the _Vulkan Spec_) is the official description of how the Vulkan API works and is ultimately used to decide what is and is not valid Vulkan usage. At first glance, the Vulkan Spec seems like an incredibly huge and dry chunk of text, but it is usually the most useful item to have open when developing.
+> 尽早并经常参考Vulkan规范。
 
-> Reference the Vulkan Spec early and often.
+## Vulkan 规范变化
+Vulkan规范可以为任何版本和任何扩展排列构建。Khronos组托管[Vulkan Spec注册表](https://www.khronos.org/registry/vulkan/specs/)，其中包含一些大多数开发人员认为足够的公开可用的变体。任何人都可以从[Vulkan-Docs](https://github.com/KhronosGroup/Vulkan-Docs/blob/master/BUILD.adoc)构建自己的Vulkan规范变体。
 
-## Vulkan Spec Variations
+在构建Vulkan规范时，要传递要为哪个版本的Vulkan构建以及要包含哪些扩展。一个没有任何扩展的Vulkan规范也称为[核心版](https://www.khronos.org/registry/vulkan/specs/1.1/html/vkspec.html#extendingvulkan-coreversions),因为它是实现Vulkan所需支持的最小数量，为了[一致性](./vulkan_cts.md)。
 
-The Vulkan Spec can be built for any version and with any permutation of extensions. The Khronos Group hosts the [Vulkan Spec Registry](https://www.khronos.org/registry/vulkan/specs/) which contains a few publicly available variations that most developers will find sufficient. Anyone can build their own variation of the Vulkan Spec from [Vulkan-Docs](https://github.com/KhronosGroup/Vulkan-Docs/blob/master/BUILD.adoc).
+## Vulkan 规范格式
+Vulkan 规范可以以不同的格式构建。
 
-When building the Vulkan Spec, you pass in what version of Vulkan to build for as well as what extensions to include. A Vulkan Spec without any extensions is also referred to as the [core version](https://www.khronos.org/registry/vulkan/specs/1.1/html/vkspec.html#extendingvulkan-coreversions) as it is the minimal amount of Vulkan an implementation needs to support in order to be [conformant](./vulkan_cts.md).
+### HTML 分块格式
+由于Vulkan规范的大小，当您访问默认的`index.html`页时，块版本是默认的。
 
-## Vulkan Spec Format
+例如：[https://www.khronos.org/registry/vulkan/specs/1.1/html/](https://www.khronos.org/registry/vulkan/specs/1.1/html/)
 
-The Vulkan Spec can be built in different formats.
+预构建的HTML分块格式Vulkan规范
+- Vulkan SDK与该规范的分块版本一起打包，每个Vulkan SDK版本都包含相应的spec版本。见最近的Vulkan SDK的[分块的规范](https://vulkan.lunarg.com/doc/sdk/latest/windows/chunked_spec/index.html)
+- [Vulkan 1.0 规范](https://www.khronos.org/registry/vulkan/specs/1.0/html/)
+- [Vulkan 1.0 规范与扩展 ](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/)
+- [Vulkan 1.0 规范与WSI扩展](https://www.khronos.org/registry/vulkan/specs/1.0-wsi_extensions/html/)
+- [Vulkan 1.1 规范](https://www.khronos.org/registry/vulkan/specs/1.1/html/)
+- [Vulkan 1.1 规范与扩展 ](https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/)
+- [Vulkan 1.1 规范与KHR扩展](https://www.khronos.org/registry/vulkan/specs/1.1-khr-extensions/html/)
 
-### HTML Chunked
+### HTML 完整版
+如果你想查看整个Vulkan规范的HTML格式，你只需要查看`vkspec.html`文件。
 
-Due to the size of the Vulkan Spec, a chunked version is the default when you visit the default `index.html` page.
+例如： https://www.khronos.org/registry/vulkan/specs/1.1/html/vkspec.html
 
-Example: [https://www.khronos.org/registry/vulkan/specs/1.1/html/](https://www.khronos.org/registry/vulkan/specs/1.1/html/)
-
-Prebuilt HTML Chunked Vulkan Spec
-- The Vulkan SDK comes packaged with the chunked version of the spec. Each Vulkan SDK version includes the corresponding spec version. See the [Chunked Specification](https://vulkan.lunarg.com/doc/sdk/latest/windows/chunked_spec/index.html) for the latest Vulkan SDK.
-- [Vulkan 1.0 Specification](https://www.khronos.org/registry/vulkan/specs/1.0/html/)
-- [Vulkan 1.0 Specification with Extensions ](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/)
-- [Vulkan 1.0 Specification with WSI Extensions](https://www.khronos.org/registry/vulkan/specs/1.0-wsi_extensions/html/)
-- [Vulkan 1.1 Specification](https://www.khronos.org/registry/vulkan/specs/1.1/html/)
-- [Vulkan 1.1 Specification with Extensions ](https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/)
-- [Vulkan 1.1 Specification with KHR Extensions](https://www.khronos.org/registry/vulkan/specs/1.1-khr-extensions/html/)
-
-### HTML Full
-
-If you want to view the Vulkan Spec in its entirety as HTML, you just need to view the `vkspec.html` file.
-
-Example: https://www.khronos.org/registry/vulkan/specs/1.1/html/vkspec.html
-
-Prebuilt HTML Full Vulkan Spec
-- The Vulkan SDK comes packaged with Vulkan Spec in its entirety as HTML for the version corresponding to the Vulkan SDK version. See the [HTML version of the Specification](https://vulkan.lunarg.com/doc/sdk/latest/windows/vkspec.html) for the latest Vulkan SDK. (Note: Slow to load. The advantage of the full HTML version is its searching capability).
-- [Vulkan 1.0 Specification](https://www.khronos.org/registry/vulkan/specs/1.0/html/vkspec.html)
-- [Vulkan 1.0 Specification with Extensions ](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html)
-- [Vulkan 1.0 Specification with WSI Extensions](https://www.khronos.org/registry/vulkan/specs/1.0-wsi_extensions/html/vkspec.html)
-- [Vulkan 1.1 Specification](https://www.khronos.org/registry/vulkan/specs/1.1/html/vkspec.html)
-- [Vulkan 1.1 Specification with Extensions ](https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html)
-- [Vulkan 1.1 Specification with KHR Extensions](https://www.khronos.org/registry/vulkan/specs/1.1-khr-extensions/html/vkspec.html)
+预构建的HTML完整版Vulkan规范
+- Vulkan SDK与Vulkan规范打包在一起，作为与Vulkan SDK版本对应的版本的HTML。见最近的Vulkan SDK的[HTML 版本的规范](https://vulkan.lunarg.com/doc/sdk/latest/windows/vkspec.html)。（注意：加载慢，完整HTML版本的优点是其搜索功能）。
+- [Vulkan 1.0 规范](https://www.khronos.org/registry/vulkan/specs/1.0/html/vkspec.html)
+- [Vulkan 1.0 规范与扩展 ](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/html/vkspec.html)
+- [Vulkan 1.0 规范规范与WSI扩展](https://www.khronos.org/registry/vulkan/specs/1.0-wsi_extensions/html/vkspec.html)
+- [Vulkan 1.1 规范](https://www.khronos.org/registry/vulkan/specs/1.1/html/vkspec.html)
+- [Vulkan 1.1 规范与扩展](https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html)
+- [Vulkan 1.1 规范与KHR扩展](https://www.khronos.org/registry/vulkan/specs/1.1-khr-extensions/html/vkspec.html)
 
 ### PDF
+访问`pdf/vkspec.pdf`文件浏览PDF格式版本。
 
-To view the PDF format, visit the `pdf/vkspec.pdf` file.
+例如: https://www.khronos.org/registry/vulkan/specs/1.1/pdf/vkspec.pdf
 
-Example: https://www.khronos.org/registry/vulkan/specs/1.1/pdf/vkspec.pdf
+预构建的PDF版Vulkan规范
+- [Vulkan 1.0 规范](https://www.khronos.org/registry/vulkan/specs/1.0/pdf/vkspec.pdf)
+- [Vulkan 1.0 规范与扩展 ](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/pdf/vkspec.pdf)
+- [Vulkan 1.0 规范与WSI扩展](https://www.khronos.org/registry/vulkan/specs/1.0-wsi_extensions/pdf/vkspec.pdf)
+- [Vulkan 1.1 规范](https://www.khronos.org/registry/vulkan/specs/1.1/pdf/vkspec.pdf)
+- [Vulkan 1.1 规范规范与扩展 ](https://www.khronos.org/registry/vulkan/specs/1.1-extensions/pdf/vkspec.pdf)
+- [Vulkan 1.1 规范与KHR扩展](https://www.khronos.org/registry/vulkan/specs/1.1-khr-extensions/pdf/vkspec.pdf)
 
-Prebuilt PDF Vulkan Spec
-- [Vulkan 1.0 Specification](https://www.khronos.org/registry/vulkan/specs/1.0/pdf/vkspec.pdf)
-- [Vulkan 1.0 Specification with Extensions ](https://www.khronos.org/registry/vulkan/specs/1.0-extensions/pdf/vkspec.pdf)
-- [Vulkan 1.0 Specification with WSI Extensions](https://www.khronos.org/registry/vulkan/specs/1.0-wsi_extensions/pdf/vkspec.pdf)
-- [Vulkan 1.1 Specification](https://www.khronos.org/registry/vulkan/specs/1.1/pdf/vkspec.pdf)
-- [Vulkan 1.1 Specification with Extensions ](https://www.khronos.org/registry/vulkan/specs/1.1-extensions/pdf/vkspec.pdf)
-- [Vulkan 1.1 Specification with KHR Extensions](https://www.khronos.org/registry/vulkan/specs/1.1-khr-extensions/pdf/vkspec.pdf)
+### 手册页
+Khronos 组织目前只托管最新的1.1版本规范，包括也有扩展的手册，在[在线注册](https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/)上。
 
-### Man pages
-
-The Khronos Group currently only host the Vulkan Man Pages for the latest version of the 1.1 spec, with all extensions, on the [online registry](https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/).
-
-The Vulkan Man Pages can also be found in the VulkanSDK for each SDK version. See the [Man Pages](https://vulkan.lunarg.com/doc/sdk/latest/windows/apispec.html) for the latest Vulkan SDK.
+Vulkan对应SDK版本的手册页也可以在每个Vulkan SDK中找到。见最近的Vulkan SDK[主页](https://vulkan.lunarg.com/doc/sdk/latest/windows/apispec.html).
